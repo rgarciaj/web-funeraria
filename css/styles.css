@@ -321,36 +321,42 @@ h2 em, h1 em {
 .hero__nubes {
   position: absolute;
   inset: -12% 0;
-  background: url("../assets/img/nubes.jpg") center 30% / cover no-repeat;
-  opacity: 0.16;
+  background: url("../assets/img/nubes.jpg") 50% 30% / cover no-repeat;
+  opacity: 0.26;
   filter: sepia(0.85) saturate(0.7) brightness(1.08);
   mix-blend-mode: multiply;
   will-change: transform;
+  animation: nubes-deriva 60s ease-in-out infinite alternate;
+}
+
+@keyframes nubes-deriva {
+  from { background-position: 44% 30%; }
+  to   { background-position: 56% 30%; }
 }
 
 .hero__rayos {
   position: absolute;
   inset: -30% -20%;
   background: conic-gradient(
-    from 178deg at 50% -12%,
+    from 176deg at 50% -12%,
     transparent 0deg,
-    rgba(233, 213, 164, 0.55) 7deg,
-    transparent 14deg,
-    transparent 26deg,
-    rgba(233, 213, 164, 0.4) 33deg,
-    transparent 40deg,
-    transparent 55deg,
-    rgba(233, 213, 164, 0.5) 62deg,
-    transparent 69deg
+    rgba(224, 186, 110, 0.75) 7deg,
+    transparent 15deg,
+    transparent 25deg,
+    rgba(224, 186, 110, 0.55) 33deg,
+    transparent 41deg,
+    transparent 54deg,
+    rgba(224, 186, 110, 0.68) 62deg,
+    transparent 70deg
   );
   transform-origin: 50% -12%;
-  animation: rayos 14s ease-in-out infinite alternate;
+  animation: rayos 9s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
 @keyframes rayos {
-  from { transform: rotate(-3deg); opacity: 0.65; }
-  to   { transform: rotate(3.5deg); opacity: 1; }
+  from { transform: rotate(-4.5deg); opacity: 0.55; }
+  to   { transform: rotate(5deg); opacity: 1; }
 }
 
 .hero__bruma {
@@ -1063,7 +1069,7 @@ h2 em, h1 em {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero__rayos, .topbar .dot { animation: none; }
+  .hero__rayos, .hero__nubes, .topbar .dot { animation: none; }
   .hero__contenido { animation-duration: 0.01s; }
   .revelar { opacity: 1; transform: none; transition: none; }
   .hero__nubes { transform: none !important; }
