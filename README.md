@@ -1,8 +1,6 @@
 # Funeraria Jesús Te Espera — sitio web
 
-Sitio one-page estático para [jesusteespera.cl](https://jesusteespera.cl): HTML, CSS y JavaScript puros, con dos scripts PHP opcionales (formulario de contacto y opiniones vía API). Reemplaza al antiguo sitio WordPress.
-
-**Vista previa:** https://jesusteespera.netlify.app
+Sitio one-page estático de [jesusteespera.cl](https://jesusteespera.cl): HTML, CSS y JavaScript puros, con dos scripts PHP (formulario de contacto y opiniones vía API). Reemplaza al antiguo sitio WordPress.
 
 ## Estructura
 
@@ -70,21 +68,14 @@ Si el hosting bloquea `mail()` o los correos llegan a spam, cambiar a SMTP
 autenticado (PHPMailer) — se necesita host SMTP, puerto, usuario y contraseña
 de la casilla.
 
-En los despliegues estáticos (Netlify / GitHub Pages) el PHP no corre: el
+Si el sitio se sirve sin PHP (por ejemplo en un preview estático), el
 formulario muestra un mensaje pidiendo llamar por teléfono.
 
 ## Publicación
 
-| Destino | Cómo |
-|---|---|
-| GitHub Pages | `git push` (rama `main`, ya configurado) |
-| Netlify | `netlify deploy --prod --dir . --site bf808882-0615-4a77-8ebe-5bfdfe588a02` |
-| Servidor (hosting) | Automático con `git push` vía GitHub Actions (`.github/workflows/deploy.yml`) |
-
-### Deploy al hosting (GitHub Actions)
-
-Cada push a `main` sube el sitio por FTPS al hosting. Configuración una sola
-vez, en GitHub → Settings → Secrets and variables → Actions:
+Automática: cada push a `main` sube el sitio por FTPS al hosting mediante
+GitHub Actions (`.github/workflows/deploy.yml`). Los secrets necesarios ya
+están configurados en GitHub → Settings → Secrets and variables → Actions:
 
 - `FTP_SERVER` — ej. `ftp.jesusteespera.cl`
 - `FTP_USERNAME` — usuario del hosting
