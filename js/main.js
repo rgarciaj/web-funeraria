@@ -106,8 +106,9 @@
   });
 
   /* ---------- Opiniones de Google ----------
-     Intenta cargarlas desde php/reviews.php (Google Places API).
-     Si el servidor aún no tiene la API configurada, muestra ejemplos. */
+     1º assets/opiniones.json (generado con tools/actualizar-opiniones.sh)
+     2º php/reviews.php (Google Places API, si está configurada)
+     3º ejemplos de respaldo */
 
   var EJEMPLOS = [
     {
@@ -132,9 +133,10 @@
 
   var opinionesGrid = document.getElementById("opinionesGrid");
   var opinionesNota = document.getElementById("opinionesNota");
+  var opinionesAviso = document.getElementById("opinionesAviso");
 
   function pintarOpiniones(datos, esDemo) {
-    var reviews = datos.reviews || [];
+    var reviews = (datos.reviews || []).filter(function (r) { return r.text; });
     opinionesGrid.innerHTML = "";
 
     if (datos.rating) {
@@ -142,9 +144,9 @@
         (datos.total ? datos.total + " opiniones en Google" : "Opiniones en Google");
     }
 
-    reviews.slice(0, 3).forEach(function (r) {
+    reviews.forEach(function (r) {
       var articulo = document.createElement("article");
-      articulo.className = "opinion revelar visible";
+      articulo.className = "opinion";
       var estrellas = "★★★★★".slice(0, r.rating) + "☆☆☆☆☆".slice(0, 5 - r.rating);
       articulo.innerHTML =
         '<p class="opinion__estrellas" aria-label="' + r.rating + ' de 5 estrellas">' + estrellas + "</p>" +
@@ -157,21 +159,33 @@
       opinionesGrid.appendChild(articulo);
     });
 
-    if (esDemo) {
-      var aviso = document.createElement("p");
-      aviso.className = "opiniones__aviso";
-      aviso.textContent = "Opiniones de ejemplo — se reemplazarán por las opiniones reales de Google.";
-      opinionesGrid.appendChild(aviso);
-    }
+    opinionesAviso.hidden = !esDemo;
   }
 
-  fetch("php/reviews.php")
+  fetch("assets/opiniones.json")
     .then(function (res) {
-      if (!res.ok || res.status === 204) throw new Error("sin API");
+      if (!res.ok) throw new Error("sin archivo");
       return res.json();
     })
     .then(function (datos) { pintarOpiniones(datos, false); })
-    .catch(function () { pintarOpiniones({ reviews: EJEMPLOS }, true); });
+    .catch(function () {
+      fetch("php/reviews.php")
+        .then(function (res) {
+          if (!res.ok || res.status === 204) throw new Error("sin API");
+          return res.json();
+        })
+        .then(function (datos) { pintarOpiniones(datos, false); })
+        .catch(function () { pintarOpiniones({ reviews: EJEMPLOS }, true); });
+    });
+
+  /* Flechas del carrusel */
+  var paso = 362; // ancho de tarjeta + separación
+  document.getElementById("opPrev").addEventListener("click", function () {
+    opinionesGrid.scrollBy({ left: -paso, behavior: "smooth" });
+  });
+  document.getElementById("opNext").addEventListener("click", function () {
+    opinionesGrid.scrollBy({ left: paso, behavior: "smooth" });
+  });
 
   /* ---------- Formulario de contacto ---------- */
   var form = document.getElementById("formContacto");
@@ -198,7 +212,7 @@
       })
       .catch(function () {
         estado.classList.add("error");
-        estado.textContent = "No se pudo enviar el mensaje. Por favor llámenos al +56 2 2551 1676.";
+        estado.textContent = "No se pudo enviar el mensaje. Por favor llámenos al +56 2 2554 0370.";
       })
       .finally(function () { boton.disabled = false; });
   });
