@@ -5,16 +5,18 @@ Sitio one-page estático de [jesusteespera.cl](https://jesusteespera.cl): HTML, 
 ## Estructura
 
 ```
-index.html              Página completa (única)
-css/styles.css          Estilos (paleta, animaciones, responsive)
-js/main.js              Menú, carrusel de opiniones, filtros de urnas,
-                        lightbox, formulario, animaciones de scroll
-assets/img/             Imágenes del sitio (logo, urnas, fondos)
-assets/opiniones.json   Reseñas de Google que muestra la página
-php/contacto.php        Recibe el formulario y envía el correo (requiere PHP)
-php/reviews.php         Alternativa: opiniones vía Google Places API (opcional)
-tools/                  Script para actualizar las opiniones
-cache/                  Caché de reviews.php (se genera sola)
+index.html                      Página completa (única)
+css/styles.css                  Estilos (paleta, animaciones, responsive)
+js/main.js                      Menú, carrusel de opiniones, filtros de urnas,
+                                lightbox, formulario, animaciones de scroll
+assets/img/                     Imágenes del sitio (logo, urnas, fondos)
+assets/opiniones.json           Reseñas de Google que muestra la página
+php/contacto.php                Recibe el formulario y envía el correo
+php/reviews.php                 Alternativa: opiniones vía Places API (opcional)
+tools/                          Script para actualizar las opiniones
+cache/                          Caché de reviews.php (se genera sola)
+.htaccess                       HTTPS forzado, redirecciones, caché
+.github/workflows/deploy.yml    Deploy automático al hosting en cada push
 ```
 
 ## Desarrollo local
@@ -38,7 +40,8 @@ Abre un Chrome invisible, carga la ficha del negocio en Google Maps, descarga
 **todas** las reseñas y reescribe `assets/opiniones.json`. La primera vez crea
 el entorno de Python automáticamente (necesita Google Chrome instalado).
 
-Luego revisar el archivo y publicar:
+Luego revisar el archivo y publicar (el push despliega automáticamente a
+jesusteespera.cl):
 
 ```bash
 git add -A && git commit -m "Actualiza opiniones" && git push
