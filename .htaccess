@@ -1,0 +1,23 @@
+# Funeraria Jesús Te Espera — configuración Apache
+
+# Sin listado de directorios
+Options -Indexes
+
+RewriteEngine On
+
+# Forzar HTTPS y dominio sin www
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://jesusteespera.cl%{REQUEST_URI} [L,R=301,NE]
+
+# URLs del sitio WordPress antiguo
+RewriteRule ^servicio-anticipado/?$ https://jesusteespera.cl/#anticipado [L,R=301,NE]
+
+# Caché para recursos estáticos
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+</IfModule>

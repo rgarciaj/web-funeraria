@@ -1,9 +1,7 @@
 name: Deploy al servidor (FTP)
 
-# Sube el sitio por FTP en cada push a main.
-# Mientras probamos, publica en la subcarpeta "nuevo/" del hosting.
-# Cuando el sitio nuevo pase a ser el oficial, cambiar server-dir a la raíz
-# (ver README, sección Publicación).
+# Sube el sitio por FTP en cada push a main, directo a producción
+# (public_html/). El WordPress antiguo quedó en wordpress_respaldo/.
 #
 # Requiere estos secrets en GitHub (Settings → Secrets and variables → Actions):
 #   FTP_SERVER    ej: ftp.jesusteespera.cl
@@ -29,7 +27,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
-          server-dir: public_html/nuevo/
+          server-dir: public_html/
           exclude: |
             **/.git*
             **/.git*/**

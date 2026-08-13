@@ -90,15 +90,9 @@ vez, en GitHub → Settings → Secrets and variables → Actions:
 - `FTP_USERNAME` — usuario del hosting
 - `FTP_PASSWORD` — contraseña
 
-Mientras dure la prueba publica en `public_html/nuevo/`
-(https://jesusteespera.cl/nuevo/). **Para pasar a producción:**
-
-1. Respaldar WordPress desde cPanel (File Manager → comprimir `public_html`,
-   y exportar la base de datos en phpMyAdmin).
-2. En `.github/workflows/deploy.yml` cambiar `server-dir: public_html/nuevo/`
-   por `server-dir: public_html/`.
-3. Hacer push; el sitio nuevo queda en la raíz. Borrar después los archivos
-   de WordPress (wp-admin, wp-content, wp-includes, etc.) desde cPanel.
+Publica directo en `public_html/` (producción). El sitio WordPress antiguo
+quedó respaldado en la carpeta `wordpress_respaldo/` del hosting (agosto
+2026); su base de datos sigue intacta en MySQL por si hiciera falta.
 
 ## Datos del negocio
 
