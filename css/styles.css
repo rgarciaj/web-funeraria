@@ -593,7 +593,7 @@ h2 em, h1 em {
 .anticipado__foto img {
   border-radius: 90px 6px 6px 6px;
   box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
   border: 1px solid rgba(233, 213, 164, 0.25);
 }
