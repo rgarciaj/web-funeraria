@@ -322,7 +322,7 @@ h2 em, h1 em {
   position: absolute;
   inset: -12% 0;
   background: url("../assets/img/nubes.jpg") 50% 30% / cover no-repeat;
-  opacity: 0.26;
+  opacity: 0.2;
   filter: sepia(0.85) saturate(0.7) brightness(1.08);
   mix-blend-mode: multiply;
   will-change: transform;
@@ -340,13 +340,13 @@ h2 em, h1 em {
   background: conic-gradient(
     from 176deg at 50% -12%,
     transparent 0deg,
-    rgba(224, 186, 110, 0.75) 7deg,
+    rgba(233, 213, 164, 0.55) 7deg,
     transparent 15deg,
     transparent 25deg,
-    rgba(224, 186, 110, 0.55) 33deg,
+    rgba(233, 213, 164, 0.4) 33deg,
     transparent 41deg,
     transparent 54deg,
-    rgba(224, 186, 110, 0.68) 62deg,
+    rgba(233, 213, 164, 0.5) 62deg,
     transparent 70deg
   );
   transform-origin: 50% -12%;
