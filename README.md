@@ -79,7 +79,26 @@ formulario muestra un mensaje pidiendo llamar por teléfono.
 |---|---|
 | GitHub Pages | `git push` (rama `main`, ya configurado) |
 | Netlify | `netlify deploy --prod --dir . --site bf808882-0615-4a77-8ebe-5bfdfe588a02` |
-| Servidor definitivo | Subir todo por FTP/cPanel **excepto** `tools/`, `.git/` y `README.md` |
+| Servidor (hosting) | Automático con `git push` vía GitHub Actions (`.github/workflows/deploy.yml`) |
+
+### Deploy al hosting (GitHub Actions)
+
+Cada push a `main` sube el sitio por FTPS al hosting. Configuración una sola
+vez, en GitHub → Settings → Secrets and variables → Actions:
+
+- `FTP_SERVER` — ej. `ftp.jesusteespera.cl`
+- `FTP_USERNAME` — usuario del hosting
+- `FTP_PASSWORD` — contraseña
+
+Mientras dure la prueba publica en `public_html/nuevo/`
+(https://jesusteespera.cl/nuevo/). **Para pasar a producción:**
+
+1. Respaldar WordPress desde cPanel (File Manager → comprimir `public_html`,
+   y exportar la base de datos en phpMyAdmin).
+2. En `.github/workflows/deploy.yml` cambiar `server-dir: public_html/nuevo/`
+   por `server-dir: public_html/`.
+3. Hacer push; el sitio nuevo queda en la raíz. Borrar después los archivos
+   de WordPress (wp-admin, wp-content, wp-includes, etc.) desde cPanel.
 
 ## Datos del negocio
 
