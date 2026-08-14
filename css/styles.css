@@ -703,21 +703,26 @@ h2 em, h1 em {
 .convenios__texto p:last-child { color: var(--pardo); }
 .convenios__texto h2 { margin-bottom: 0.8rem; }
 
+.convenios__logos {
+  display: grid;
+  gap: 18px;
+}
+
 .convenios__logo {
   background: var(--blanco);
   border: 1px solid rgba(201, 146, 30, 0.16);
   border-radius: 10px;
-  padding: 28px;
+  padding: 24px 28px;
   display: grid;
   place-items: center;
   box-shadow: var(--sombra-suave);
 }
 
-.convenios__logo img { max-width: 230px; }
+.convenios__logo img { max-width: 210px; max-height: 110px; object-fit: contain; }
 
 @media (max-width: 760px) {
   .convenios__inner { grid-template-columns: 1fr; }
-  .convenios__logo { max-width: 320px; margin-inline: auto; }
+  .convenios__logos { max-width: 320px; margin-inline: auto; width: 100%; }
 }
 
 /* ==========================================================================
