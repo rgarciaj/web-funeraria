@@ -162,7 +162,8 @@
     opinionesAviso.hidden = !esDemo;
   }
 
-  fetch("assets/opiniones.json")
+  // no-cache: usa la copia del navegador solo si el servidor confirma que sigue vigente
+  fetch("assets/opiniones.json", { cache: "no-cache" })
     .then(function (res) {
       if (!res.ok) throw new Error("sin archivo");
       return res.json();
