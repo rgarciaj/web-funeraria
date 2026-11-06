@@ -1,25 +1,43 @@
 {
   "rating": 5.0,
-  "total": 19,
-  "actualizado": "2026-08-13",
+  "total": 21,
+  "actualizado": "2026-11-05",
   "reviews": [
+    {
+      "author_name": "Wilfredo Pradines",
+      "rating": 5,
+      "relative_time_description": "Hace 5 horas",
+      "text": "En un momento tan complejo como la muerte la funeraria nos acogió y resolvió fueron oportunos en todo aspecto. Gracias por los servicios entregados"
+    },
+    {
+      "author_name": "abejita.rockera",
+      "rating": 5,
+      "relative_time_description": "Hace 2 meses",
+      "text": "Quiero agradecer sinceramente a todo el equipo de la funeraria por la atención, el respeto y la preocupación que tuvieron con nuestra familia en un momento tan difícil.\nDesde el primer momento nos acompañaron con mucha humanidad, disposición y profesionalismo, ayudándonos en cada detalle y haciendo que todo fuera más llevadero.\nSe agradece especialmente el trato cercano, la empatía y el cuidado con que realizaron todo el servicio. En momentos así, encontrarse con personas que trabajan con respeto y sensibilidad realmente marca una diferencia.\nMuchas gracias por todo"
+    },
+    {
+      "author_name": "Luis Miranda",
+      "rating": 5,
+      "relative_time_description": "Hace 2 meses",
+      "text": "Muchas gracias a la funeraria por su rápida respuesta y muy buen servicio\n100% recomendada"
+    },
     {
       "author_name": "Erika Bascuñán",
       "rating": 5,
-      "relative_time_description": "Hace 5 meses",
+      "relative_time_description": "Hace 8 meses",
       "text": "Como familia estamos infinitamente agradecidos de la Funeraria Jesús Te Espera.  Hemos contado con su apoyo en 3 ocasiones, la calidad humana del servicio es algo que los diferencia y lo valoramos, son un tremendo equipo.\nGracias por acompañarnos cada vez que los hemos necesitado."
-    },
-    {
-      "author_name": "Luis Garrido Antinao",
-      "rating": 5,
-      "relative_time_description": "Hace 6 meses",
-      "text": "Quiero agradecer de manera personal y en nmbre de mi familia, el servicio prestado en un momento difícil. Fue eficiente, rápido y con la consideración necesaria de tratar con una persona preciada para nosotros. Recomendado 100% para quien requiera de un servicio impecable."
     },
     {
       "author_name": "Ramon Lobos",
       "rating": 5,
-      "relative_time_description": "Hace 6 meses",
+      "relative_time_description": "Hace 9 meses",
       "text": "Excelente servicio, gracias a todo el equipo por el acompañamiento y la empatía brindada muy personalizado y cordial. Es valioso que las personas vean el dolor  antes que el dinero en estos momentos tan dolorosos. Muchas muchas gracias!!"
+    },
+    {
+      "author_name": "Luis Garrido Antinao",
+      "rating": 5,
+      "relative_time_description": "Hace 9 meses",
+      "text": "Quiero agradecer de manera personal y en nmbre de mi familia, el servicio prestado en un momento difícil. Fue eficiente, rápido y con la consideración necesaria de tratar con una persona preciada para nosotros. Recomendado 100% para quien requiera de un servicio impecable."
     },
     {
       "author_name": "Raul Gerardo Caro Vilches",
@@ -104,12 +122,6 @@
       "rating": 5,
       "relative_time_description": "Hace 8 años",
       "text": "Gracias por todo."
-    },
-    {
-      "author_name": "Luis Miranda",
-      "rating": 5,
-      "relative_time_description": "hace 20 minutos",
-      "text": "Muchas gracias a la funeraria por su rápida respuesta y muy buen servicio\n100% recomendada"
     }
   ]
 }

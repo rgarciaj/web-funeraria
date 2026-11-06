@@ -36,9 +36,10 @@ Abrir http://localhost:8734
 ./tools/actualizar-opiniones.sh
 ```
 
-Abre un Chrome invisible, carga la ficha del negocio en Google Maps, descarga
-**todas** las reseñas y reescribe `assets/opiniones.json`. La primera vez crea
-el entorno de Python automáticamente (necesita Google Chrome instalado).
+Abre un Chrome invisible, carga la ficha del negocio en Google Maps, lee las
+reseñas más recientes y las combina con las que ya están en
+`assets/opiniones.json` (las nuevas quedan primero). La primera vez crea el
+entorno de Python automáticamente (necesita Google Chrome instalado).
 
 Luego revisar el archivo y publicar (el push despliega automáticamente a
 jesusteespera.cl):
@@ -53,8 +54,12 @@ para diagnosticar: `./tools/actualizar-opiniones.sh --visible`
 Notas técnicas del script (no tocar sin motivo):
 - Usa un user-agent de Chrome normal: sin él, Google sirve una "vista
   limitada" con menos reseñas.
-- No reordena por "más recientes": ese reordenamiento rompe la carga
-  progresiva y deja reseñas fuera.
+- Sin iniciar sesión, Google muestra solo 5 reseñas por cada orden ("Ver más
+  reseñas" pide login). Por eso lee "Más útiles" y "Más recientes" y conserva
+  las ya guardadas. Conviene ejecutarlo seguido: si entran más de 5 reseñas
+  entre una ejecución y otra, las más antiguas de ese grupo no se alcanzan a ver.
+- La fecha relativa ("Hace 8 meses") solo se refresca en las reseñas que Google
+  muestra en esa ejecución; en las demás queda la de la última vez que se vieron.
 
 ## Formulario de contacto (correo)
 

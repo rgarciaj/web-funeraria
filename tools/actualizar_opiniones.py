@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
-Descarga TODAS las opiniones de Google Maps de Funeraria Jesús Te Espera
-y las guarda en assets/opiniones.json (el sitio las lee con JavaScript).
+Trae las opiniones más recientes de Google Maps de Funeraria Jesús Te Espera
+y las combina con las ya guardadas en assets/opiniones.json (el sitio las lee
+con JavaScript). Sin iniciar sesión, Google muestra solo 5 reseñas por cada
+orden, por eso no se puede descargar el listado completo: las reseñas que ya
+estaban se conservan.
 
 Uso:
     ./tools/actualizar-opiniones.sh          # recomendado (crea el entorno solo)
@@ -65,48 +68,25 @@ def abrir_pestana_resenas(driver):
     return False
 
 
-def total_unicas(driver):
-    return len({
-        t.get_attribute("data-review-id")
-        for t in driver.find_elements(By.CSS_SELECTOR, "div[data-review-id]")
-    })
-
-
 def total_esperado(driver):
     """Cuántas reseñas declara Google en el encabezado (0 si no se encuentra)."""
     m = re.search(r"(\d+)\s*reseñas", driver.page_source)
     return int(m.group(1)) if m else 0
 
 
-def hacer_scroll_hasta_cargar_todo(driver, maximo_min=5):
-    """Baja hasta la última reseña visible hasta tenerlas todas."""
-    fin = time.time() + maximo_min * 60
-    esperado = total_esperado(driver)
-    if esperado:
-        print(f"  Google declara {esperado} reseñas")
-    ultimo_total, sin_cambio = 0, 0
-    while time.time() < fin:
-        # scrollear el contenedor del listado hasta su fondo real
-        driver.execute_script("""
-          const els = [...document.querySelectorAll('div')].filter(el =>
-            el.scrollHeight > el.clientHeight + 100 &&
-            el.querySelector('div[data-review-id]'));
-          const p = els[els.length - 1];
-          if (p) p.scrollTop = p.scrollHeight;
-        """)
-        time.sleep(2)
-        total = total_unicas(driver)
-        if esperado and total >= esperado:
-            print(f"  … {total} reseñas cargadas (todas)")
-            break
-        if total == ultimo_total:
-            sin_cambio += 1
-            if sin_cambio >= 12:  # ~24 s seguidos sin reseñas nuevas: terminamos
-                break
-        else:
-            sin_cambio = 0
-            print(f"  … {total} reseñas cargadas")
-        ultimo_total = total
+def ordenar_por_recientes(driver):
+    """Cambia el orden del listado a 'Más recientes'."""
+    driver.execute_script(
+        "arguments[0].click()",
+        driver.find_element(By.XPATH, '//button[@aria-label="Ordenar reseñas"]'),
+    )
+    time.sleep(2)
+    for opcion in driver.find_elements(By.CSS_SELECTOR, '[role="menuitemradio"]'):
+        if "reciente" in opcion.text.lower():
+            driver.execute_script("arguments[0].click()", opcion)
+            time.sleep(5)
+            return True
+    return False
 
 
 def expandir_textos(driver):
@@ -163,6 +143,14 @@ def extraer(driver):
     return resenas
 
 
+def combinar(nuevas, guardadas):
+    """Las reseñas leídas ahora van primero; las demás guardadas se mantienen."""
+    combinadas = {}
+    for resena in nuevas + guardadas:
+        combinadas.setdefault(resena["author_name"], resena)
+    return list(combinadas.values())
+
+
 def nota_global(driver):
     try:
         texto = driver.find_element(By.CSS_SELECTOR, "div.fontDisplayLarge").text
@@ -183,17 +171,24 @@ def main():
         if not abrir_pestana_resenas(driver):
             sys.exit("No apareció la pestaña de reseñas. Prueba con --visible")
 
-        print("Cargando todas las reseñas (scroll)…")
-        hacer_scroll_hasta_cargar_todo(driver)
+        print("Leyendo las reseñas…")
         expandir_textos(driver)
-
-        resenas = extraer(driver)
-        if not resenas:
+        utiles = extraer(driver)
+        if not ordenar_por_recientes(driver):
+            sys.exit("No se pudo ordenar por 'Más recientes'. Prueba con --visible")
+        expandir_textos(driver)
+        recientes = extraer(driver)
+        if not recientes:
             sys.exit("No se extrajo ninguna reseña. Google pudo cambiar el diseño.")
+
+        guardadas = json.loads(SALIDA.read_text(encoding="utf-8"))["reviews"]
+        resenas = combinar(recientes + utiles, guardadas)
+        conocidas = {r["author_name"] for r in guardadas}
+        nuevas = [r["author_name"] for r in resenas if r["author_name"] not in conocidas]
 
         datos = {
             "rating": nota_global(driver),
-            "total": len(resenas),
+            "total": max(total_esperado(driver), len(resenas)),
             "actualizado": time.strftime("%Y-%m-%d"),
             "reviews": resenas,
         }
@@ -201,6 +196,7 @@ def main():
             json.dumps(datos, ensure_ascii=False, indent=2), encoding="utf-8"
         )
         print(f"\nListo: {len(resenas)} reseñas guardadas en {SALIDA}")
+        print(f"Nuevas: {', '.join(nuevas) or 'ninguna'}")
         print("Revisa el archivo y luego: git add -A && git commit -m 'Actualiza opiniones' && git push")
     finally:
         driver.quit()
